@@ -25,8 +25,6 @@ public class cowblank {
             blankets[blank] = s.nextInt();
         Arrays.sort(blankets);
 
-        System.out.println("Cow coldnesses: " + Arrays.toString(cows));
-        System.out.println("Blankets available: " + Arrays.toString(blankets));
         System.out.println(search());
     }
 
@@ -37,7 +35,6 @@ public class cowblank {
         
         while (lo <= hi) {
             int mid = (lo + hi)/2;
-
             // Mid is viable, so start searching below it
             if (viable(mid)) {
                 lowest = mid;
@@ -53,7 +50,6 @@ public class cowblank {
     }
 
     public static boolean viable(int minColdness){
-        boolean viable = false;
         ArrayList<Integer> remainingCows = new ArrayList<Integer>(
                 Arrays.asList(cows));
         ArrayList<Integer> remainingBlankets = new ArrayList<Integer>(
@@ -63,7 +59,7 @@ public class cowblank {
             int first = remainingCows.get(0);
 
             // Try to satisfy the cow without a blanket
-            if (first < minColdness)
+            if (first <= minColdness)
                 remainingCows.remove(0);
 
             // Try and find a blanket
