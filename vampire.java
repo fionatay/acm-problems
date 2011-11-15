@@ -1,5 +1,3 @@
-
-import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -7,18 +5,17 @@ public class vampire {
     
     public static void main(String[] args){
         Scanner s = new Scanner(System.in);
-        long vampire;
-        while ((vampire = s.nextLong()) != 0) {
-            String vamp = Long.toString(vampire);
+        String vampire;
+        while ((vampire = s.nextLine()).equals("0")) {
             String answer;
             try {
-                permutable(vamp);
+                permutable(vampire);
                 answer = "no";
             }
             catch (Exception e) {
-                answer = "yes";
+                answer = "yes";                
             } 
-            System.out.println(vamp + ": " + answer);
+            System.out.println(vampire + ": " + answer);
         }
     }
     
@@ -27,7 +24,7 @@ public class vampire {
         if (2*N != num.length())
             return; // Stop trying
         
-        long product = Integer.parseInt(num);
+        long product = Long.parseLong(num);
         int[] permutation = new int[2*N];
         int X, Y;
         int[] indices;
@@ -46,15 +43,18 @@ public class vampire {
     public static void multiplies(int[] perm, int N, long product) throws Exception {
         if (perm[0] == 0 || perm[N] == 0) return; // invalid perm
         else {
-            int X = perm[0]; 
-            int Y = perm[N];
+            long X = perm[0]; 
+            long Y = perm[N];
             for (int i = 1; i < N; i++) {
                 X *= 10; Y *= 10;
                 X += perm[i]; Y += perm[i+N];
                 if (perm[i] == 0 && perm[i-1] == 0) return; // invalid perm
                 if (perm[i+N] == 0 && perm[i+N-1] == 0) return; // invalid perm
             }
-            if (X*Y == product) throw new Exception("done");
+            if (X*Y == product) {
+//                System.out.println("Product is correct " + X + "*" + Y + " = " + product);
+                throw new Exception();
+            }
         }
         
     }
