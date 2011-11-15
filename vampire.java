@@ -7,9 +7,9 @@ public class vampire {
     
     public static void main(String[] args){
         Scanner s = new Scanner(System.in);
-        int vampire;
-        while ((vampire = s.nextInt()) != 0) {
-            String vamp = Integer.toString(vampire);
+        long vampire;
+        while ((vampire = s.nextLong()) != 0) {
+            String vamp = Long.toString(vampire);
             String answer;
             try {
                 permutable(vamp);
@@ -27,7 +27,7 @@ public class vampire {
         if (2*N != num.length())
             return; // Stop trying
         
-        int product = Integer.parseInt(num);
+        long product = Integer.parseInt(num);
         int[] permutation = new int[2*N];
         int X, Y;
         int[] indices;
@@ -43,7 +43,7 @@ public class vampire {
         }
     }
     
-    public static void multiplies(int[] perm, int N, int product) throws Exception {
+    public static void multiplies(int[] perm, int N, long product) throws Exception {
         if (perm[0] == 0 || perm[N] == 0) return; // invalid perm
         else {
             int X = perm[0]; 
