@@ -16,6 +16,9 @@ public class vampire {
     
     public static boolean permutable(String num) {
         int N = num.length()/2;
+        if (2*N != num.length())
+            return false;
+        
         int product = Integer.parseInt(num);
         int X;
         int Y;
