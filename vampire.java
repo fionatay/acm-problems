@@ -1,4 +1,5 @@
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -9,37 +10,53 @@ public class vampire {
         int vampire;
         while ((vampire = s.nextInt()) != 0) {
             String vamp = Integer.toString(vampire);
-            String yesno = permutable(vamp) ? "yes" : "no";
-            System.out.println(vamp + ": " + yesno);
+            String answer;
+            try {
+                permutable(vamp);
+                answer = "no";
+            }
+            catch (Exception e) {
+                answer = "yes";
+            } 
+            System.out.println(vamp + ": " + answer);
         }
     }
     
-    public static boolean permutable(String num) {
+    public static void permutable(String num) throws Exception {                
         int N = num.length()/2;
         if (2*N != num.length())
-            return false;
+            return; // Stop trying
         
         int product = Integer.parseInt(num);
-        int X;
-        int Y;
-        
+        int[] permutation = new int[2*N];
+        int X, Y;
         int[] indices;
+        
         PermutationGenerator x = new PermutationGenerator(N*2);
         while (x.hasMore()) {
             indices = x.getNext();
 
-            X = Y = 0;
-            for (int i = 0; i < N; i++) {
-                X *= 10;
-                Y *= 10;
-                X += num.charAt(indices[i]) - '0';
-                Y += num.charAt(indices[i+N]) - '0';
-            }
-//            System.out.println("X is " + X + "; Y is " + Y);
-            if (X*Y == product)
-                return true;
+            for (int i = 0; i < 2*N; i++) 
+                permutation[indices[i]] = num.charAt(i) - '0'; // Fill in the permutation
+//            System.out.println("Permutation is " + Arrays.toString(permutation));
+            multiplies(permutation, N, product);
         }
-        return false;
+    }
+    
+    public static void multiplies(int[] perm, int N, int product) throws Exception {
+        if (perm[0] == 0 || perm[N] == 0) return; // invalid perm
+        else {
+            int X = perm[0]; 
+            int Y = perm[N];
+            for (int i = 1; i < N; i++) {
+                X *= 10; Y *= 10;
+                X += perm[i]; Y += perm[i+N];
+                if (perm[i] == 0 && perm[i-1] == 0) return; // invalid perm
+                if (perm[i+N] == 0 && perm[i+N-1] == 0) return; // invalid perm
+            }
+            if (X*Y == product) throw new Exception("done");
+        }
+        
     }
 
     public static class PermutationGenerator {
